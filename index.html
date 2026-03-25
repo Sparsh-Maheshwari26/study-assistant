@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Study Assistant</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div id="notification-toast" class="hidden">
+        <span id="toast-msg"></span>
+    </div>
+
+    <div class="dashboard-layout">
+        
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h1>Study Assistant</h1>
+                <button id="theme-toggle-btn">🌓</button>
+            </div>
+
+            <div class="card calendar-section">
+                <div class="calendar-header">
+                    <h2 id="calendar-month">Calendar</h2>
+                </div>
+                <div id="mini-calendar" class="calendar-grid"></div>
+            </div>
+            
+            <div class="card task-section">
+                <div class="task-header">
+                    <h2>✅ Tasks</h2>
+                    </div>
+
+                <div class="filter-tabs">
+                    <button id="filter-all" class="filter-btn active">All Tasks</button>
+                    <button id="filter-today" class="filter-btn">Today</button>
+                </div>
+                
+                <div class="task-input-group">
+                    <input type="text" id="task-input" placeholder="What to study? (Press Enter)">
+                    <select id="task-category">
+                        <option value="📚 Study">📚 Study</option>
+                        <option value="💻 Coding">💻 Coding</option>
+                        <option value="📝 Assignment">📝 Assignment</option>
+                    </select>
+                </div>
+                <input type="date" id="task-date"> 
+                <button id="add-task-btn">Add Task</button>
+                
+                <div id="empty-state">
+                    <p>No tasks yet. Add one to get started 🚀</p>
+                </div>
+
+                <ul id="task-list"></ul>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <div class="header-actions">
+                <p id="motivational-msg">Ready to crush it today? 🔥</p>
+                <div id="streak-display" class="streak-badge">🔥 0 Day Streak</div>
+                <button id="focus-btn">Toggle Focus Mode</button>
+            </div>
+
+            <div class="dashboard-grid">
+                
+                <section class="card stats-section">
+                    <h2>📅 Monthly Overview</h2>
+                    <div class="stats-grid">
+                        <div class="stat-box">
+                            <h3 id="stat-assigned">0</h3>
+                            <p>Assigned</p>
+                        </div>
+                        <div class="stat-box pending-box">
+                            <h3 id="stat-pending">0</h3>
+                            <p>Pending</p>
+                        </div>
+                        <div class="stat-box completed-box">
+                            <h3 id="stat-completed">0</h3>
+                            <p>Completed</p>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="card goal-section">
+                    <h2>📊 Daily Goal</h2>
+                    <input type="number" id="goal-input" placeholder="Goal in minutes (e.g., 25)" min="1" step="1">
+                    <div class="progress-container">
+                        <div class="progress-header">
+                            <p>Progress:</p>
+                            <span id="progress-text">0%</span> 
+                        </div>
+                        <progress id="study-progress" value="0" max="100"></progress>
+                    </div>  
+                </section>
+
+                <section class="card timer-section">
+                    <h2>⏱ Study Timer</h2>
+                    <div id="timer-display">00:00:00</div>
+                    
+                    <div class="button-container">
+                        <button id="start-btn">Start</button>
+                        <button id="stop-btn">Stop</button>
+                        <button id="reset-btn">Reset Timer</button>
+                    </div>
+                    <button id="new-day-btn" class="secondary-btn">🌅 Start New Day</button>
+                </section>
+
+            </div>
+        </main>
+
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
