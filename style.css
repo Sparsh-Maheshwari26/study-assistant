@@ -161,4 +161,46 @@ li.due-today .task-date-display { color: #f59e0b; font-weight: 600; }
     100% { opacity: 1; transform: scale(1); }
 }
 
-@media (max-width: 768px) { .dashboard-layout { flex-direction: column; } .header-actions, .filter-tabs { flex-direction: column; align-items: flex-start; gap: 10px;} }
+/* --- 📱 Mobile Responsiveness Polish --- */
+@media (max-width: 768px) {
+    /* 1. Reduce overall body padding so the app fills the screen */
+    body { padding: 15px 10px; }
+    
+    /* 2. Stack the layout and reduce the giant gaps */
+    .dashboard-layout { flex-direction: column; gap: 20px; }
+    
+    /* 3. Change sidebar border from right to bottom */
+    .sidebar { 
+        border-right: none; 
+        border-bottom: 1px solid var(--card-border); 
+        padding-right: 0; 
+        padding-bottom: 25px; 
+    }
+    
+    /* 4. Shrink card padding to save screen space */
+    .card { padding: 20px; }
+    
+    /* 5. Stack the top actions and make buttons stretch for easy thumb tapping */
+    .header-actions, .filter-tabs { 
+        flex-direction: column; 
+        align-items: stretch; 
+        gap: 15px; 
+    }
+    
+    /* 6. Stack the monthly overview stats so they aren't squished */
+    .stats-grid { flex-direction: column; }
+    
+    /* 7. Shrink the giant timer so it doesn't overflow the screen */
+    #timer-display { font-size: 2.8rem; }
+    
+    /* 8. Make sure long task names don't push the delete/edit buttons off-screen */
+    li { flex-wrap: wrap; gap: 10px; }
+    .task-info { max-width: 100%; }
+    .task-actions { 
+        width: 100%; 
+        justify-content: flex-end; /* Pushes the edit/delete buttons to the right edge */
+        border-top: 1px solid var(--card-border);
+        padding-top: 8px;
+        margin-top: 4px;
+    }
+}
