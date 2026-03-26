@@ -9,7 +9,7 @@
 </head>
 <body>
 
-    <div id="notification-toast" class="hidden">
+    <div id="notification-toast" class="hidden">       
         <span id="toast-msg"></span>
     </div>
 
@@ -31,7 +31,7 @@
             <div class="card task-section">
                 <div class="task-header">
                     <h2>✅ Tasks</h2>
-                    </div>
+                </div>
 
                 <div class="filter-tabs">
                     <button id="filter-all" class="filter-btn active">All Tasks</button>
@@ -106,6 +106,16 @@
                         <button id="reset-btn">Reset Timer</button>
                     </div>
                     <button id="new-day-btn" class="secondary-btn">🌅 Start New Day</button>
+                </section>
+
+                <section class="card pdf-section">
+                    <div class="pdf-header">
+                        <h2>📄 Study Material</h2>
+                        <input type="file" id="pdf-upload" accept="application/pdf" class="file-input">
+                    </div>
+                    <div id="pdf-container">
+                        <p class="pdf-placeholder">Upload a PDF to start studying 🚀</p>
+                    </div>
                 </section>
 
             </div>

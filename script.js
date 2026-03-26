@@ -121,14 +121,13 @@ function refreshOverdueStatus() {
         const dateAttr = li.getAttribute('data-date');
         const isCompleted = li.classList.contains('completed');
         
-        // Reset classes first
         li.classList.remove('overdue', 'due-today');
         
         if (dateAttr && !isCompleted) {
             if (dateAttr < today) {
-                li.classList.add('overdue'); // Past due (Red)
+                li.classList.add('overdue'); 
             } else if (dateAttr === today) {
-                li.classList.add('due-today'); // Due today (Orange)
+                li.classList.add('due-today'); 
             }
         }
     });
@@ -161,6 +160,11 @@ function initSystem() {
     updateSystem();
     updateStreak();
     
+    const savedPDF = localStorage.getItem('savedPDF');
+    if (savedPDF) {
+        document.getElementById('pdf-container').innerHTML = `<iframe src="${savedPDF}" class="pdf-frame"></iframe>`;
+    }
+    
     const today = new Date().toISOString().split('T')[0];
     let tasksDueToday = 0;
     taskList.querySelectorAll('li').forEach(li => {
@@ -179,7 +183,7 @@ function createNewTask() {
     
     if (text !== "") {
         const li = document.createElement('li');
-        if (dateVal) li.setAttribute('data-date', dateVal); // Required for date highlighting!
+        if (dateVal) li.setAttribute('data-date', dateVal); 
         
         let dateHTML = "";
         if (dateVal !== "") {
@@ -268,8 +272,6 @@ document.getElementById('filter-today').addEventListener('click', (e) => {
 });
 
 // --- Timer & Goal Logic ---
-
-// 🔥 MISSING VARIABLES RESTORED HERE 🔥
 const timerDisplay = document.getElementById('timer-display');
 const goalInput = document.getElementById('goal-input');
 const progressBar = document.getElementById('study-progress');
@@ -362,12 +364,47 @@ document.getElementById('new-day-btn').addEventListener('click', () => {
     }
 });
 
-// Focus Mode
-document.getElementById('focus-btn').addEventListener('click', function() {
-    const elementsToHide = ['.sidebar', '.stats-section', '#motivational-msg', '#new-day-btn'];
-    const isFocus = this.textContent === 'Toggle Focus Mode';
+// --- 🔥 PDF UPLOAD LOGIC ---
+const pdfUpload = document.getElementById('pdf-upload');
+const pdfContainer = document.getElementById('pdf-container');
+
+pdfUpload.addEventListener('change', function(e) {
+    const file = e.target.files[0];
     
-    elementsToHide.forEach(sel => document.querySelector(sel).style.display = isFocus ? 'none' : (sel === '.sidebar' || sel === '.stats-section' ? 'flex' : 'block'));
+    if (file && file.type === 'application/pdf') {
+        const reader = new FileReader();
+        
+        reader.onload = function() {
+            try {
+                localStorage.setItem('savedPDF', reader.result);
+                showNotification("📄 PDF Saved & Loaded successfully!");
+            } catch (error) {
+                console.warn("PDF is too large for LocalStorage");
+                showNotification("⚠️ PDF loaded for this session (Too large to save permanently).");
+            }
+            
+            pdfContainer.innerHTML = `<iframe src="${reader.result}" class="pdf-frame"></iframe>`;
+        };
+        
+        reader.readAsDataURL(file);
+    } else {
+        showNotification("⚠️ Please upload a valid PDF file.");
+    }
+});
+
+// --- 🎯 UPGRADED FOCUS MODE LOGIC ---
+const focusBtn = document.getElementById('focus-btn');
+
+focusBtn.addEventListener('click', function() {
+    document.body.classList.toggle('focus-active');
+    
+    const isFocus = document.body.classList.contains('focus-active');
+    
     this.textContent = isFocus ? 'Exit Focus Mode' : 'Toggle Focus Mode';
     this.style.background = isFocus ? '#ef4444' : '#10b981';
+    
+    if (isFocus) {
+        showNotification("🎯 Focus Mode Activated");
+    }
 });
+/* FIXED: REMOVED THE EXTRA "}" AT THE VERY END THAT WAS BREAKING EVERYTHING! */
